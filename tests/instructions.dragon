@@ -1,0 +1,33 @@
+[ main ]
+main()() = {
+    [ set instructions ]
+    dragon.set(dragon.boolean.false)(false)
+    dragon.set(dragon.boolean.true)(true)
+    dragon.set(dragon.binary.10101010_10101010)(binary)
+    dragon.set(dragon.integer.01234_56789)(integer)
+    dragon.set(dragon.hexadecimal.01234567_89aBcDeF)(hexadecimal)
+    dragon.set("Hello, Dragon!%0a;")(message)
+    dragon.set("./README.md")(file_path)
+
+    [ copy instruction ]
+    dragon.copy(integer)(oof) [ copy cell ]
+    dragon.copy(message)(message_copy) [ copy structure ]
+
+    [ request memory instructions ]
+    dragon.set(dragon.integer.128)(buffer.size)
+    dragon.request_memory(buffer.size)(buffer_1)
+    dragon.request_memory(buffer.size)(buffer_2)
+
+    [ io instructions ]
+    dragon.address_to_cell(buffer_1:start dragon.cell.byte_size)(value)
+    dragon.cell_to_address(value dragon.cell.byte_size)(buffer_1:start)
+    dragon.buffer_to_buffer(buffer_1)(buffer_2)
+
+    [ file io instructions ]
+    dragon.file_to_buffer(file_path)(file_data)
+    dragon.buffer_to_file(file_data)(file_path)
+
+    [ return memory ]
+    dragon.return_memory(buffer_1)()
+    dragon.return_memory(buffer_2)()
+}
