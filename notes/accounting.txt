@@ -1,0 +1,9 @@
+Step accounting needs to take for program accounting.
+1. Generate predefined variables, types and structures.
+2. Generate predefined functions and parse user defined functions.
+3. Account each function individually.
+    1. Map all sub-scopes.
+    2. Record all offsets.
+    3. Record and validate all variables.
+    4. Validate all function calls.
+4. Find the main function and mark it.
