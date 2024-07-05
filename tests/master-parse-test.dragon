@@ -16,6 +16,8 @@ dragon.check.current_within_range(current !dragon.current)(in_range !dragon.flag
 
 [ test scoping ]
 test.scope_parsing(do_thing !dragon.flag)() = {
+    do_stuff()()
+    
     [ generic scope ]
     @generic_scope dragon.always = {
         do_stuff()()
@@ -46,12 +48,6 @@ test.box_multiply(a !test.box b !test.box)(area !test.box) = {
     [ do multiplies ]
     dragon.integer.multiply(a:x b:x)(area:x)
     dragon.integer.multiply(a:y b:y)(area:y)
-}
-
-[ thing ]
-do_stuff()() = {
-    dragon.set("A thing has been done.%0A;")(message)
-    dragon.print.buffer_as_string(message)()
 }
 
 [ function arguments test ]

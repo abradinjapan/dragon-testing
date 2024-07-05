@@ -1,9 +1,19 @@
-Step accounting needs to take for program accounting.
-1. Generate predefined variables, types and structures.
+Steps accounting needs to take for program accounting.
+1. Generate predefined variables, types and structures; parse user defined structures.
 2. Generate predefined functions and parse user defined functions.
 3. Account each function individually.
-    1. Map all sub-scopes.
+    1. Verify and map all sub-scopes.
     2. Record all offsets.
     3. Record and validate all variables.
     4. Validate all function calls.
 4. Find the main function and mark it.
+
+How to account layered scopes?
+    - Treat each scope like layers of a stack.
+        - Each push onto the stack is the name of the new scope.
+
+How to account function IO?
+    - All variables in a function are normal variables.
+      There is no distinction between inputs, outputs and body variables.
+      All variables are either predefined or body variables.
+    - Variables inside the input or output arguments are just variable declarations that happen to be where function io ends up.
