@@ -1,0 +1,10 @@
+Expanding is the process of taking a parse tree and fleshing out all possible variants of each function.
+    Since the addition of type discovery, it is necessary for the compiler to be able to work with multiple functions derived from one function.
+    Thus expanding the definitions.
+Same thing goes for structures since they can have multiple names.
+    The only thing is is that there can be no duplicate structure names anywhere in the program and all structure members must have exactly one type.
+Expansion also fleshes out all offset and scope names because of named scopes.
+Expansion also trims unused functions.
+
+What if we both expanded the definitions and marked them by integer simultaneously?
+    No, that's accounting's job.

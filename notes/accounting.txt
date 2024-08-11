@@ -17,3 +17,13 @@ How to account function IO?
       There is no distinction between inputs, outputs and body variables.
       All variables are either predefined or body variables.
     - Variables inside the input or output arguments are just variable declarations that happen to be where function io ends up.
+
+How to translate structure members to cells?
+    - Map out all variables in a straight line of cells.
+
+Accounting is translating the grammar into the final program blueprint? (Not the byte code itself, the blueprint for the byte code.)
+I can create the cells in the accounter and generate offsets in the generator.
+In order for functions to be able to accept any type, a walkthrough of all statements is necessary to generate every necessary function.
+    Also, variables and members can be validated while searching through function calls.
+
+Maybe a separate stage for expanding out definitions is required.
