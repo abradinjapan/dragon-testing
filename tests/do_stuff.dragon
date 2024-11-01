@@ -1,5 +1,0 @@
-[ thing ]
-do_stuff()() = {
-    dragon.set("A thing has been done.%0A;")(message)
-    dragon.print.buffer_as_string(message)()
-}

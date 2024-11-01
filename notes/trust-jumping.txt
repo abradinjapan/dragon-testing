@@ -1,0 +1,2 @@
+Trust jumping is the act of directly jumping directly from one program to another in order to run code.
+    Like jumping to and from plug and play modules.

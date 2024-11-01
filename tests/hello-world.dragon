@@ -1,4 +1,4 @@
-main()() = {
+dragon.main()() = {
     dragon.set("The dragon slumbers...%0a;")(message)
     dragon.print.buffer_as_string(message)()
 }

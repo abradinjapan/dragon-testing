@@ -1,0 +1,323 @@
+dragon.main()() = {
+    [ start timer ]
+    dragon.time.now()(time.start)
+    scratch.print.time(time.start)()
+
+    [ declare variables ]
+    dragon.set(dragon.integer.100)(a)
+    dragon.set("Scratching...%0a;")(message)
+    dragon.pack(a, a)(buff !dragon.buffer)
+
+    [ print variables ]
+    dragon.print.buffer_as_string(message)()
+    dragon.print.debug_cell(a)()
+    dragon.print.new_line()()
+    dragon.print.debug_cell(buff:start)()
+    dragon.print.new_line()()
+
+    @oof
+
+    @scope dragon.never = {
+        dragon.set(dragon.integer.200)(b)
+        dragon.print.debug_cell(b)()
+        dragon.print.new_line()()
+
+        @electric_boogaloo
+    }
+
+    scratch.say(message)(value)
+    dragon.print.debug_cell(value)()
+    dragon.print.new_line()()
+
+    scratch.create.box_3D()(box)
+    scratch.print.box_3D(box)()
+
+    scratch.test.jumping()()
+    dragon.set(dragon.integer.22)(c)
+    scratch.test.checking(c)()
+
+    [ test maths! ]
+    scratch.test.maths(a, c)(math)
+    scratch.test.maths.print(math)()
+
+    dragon.copy(math)(more_maths)
+    scratch.test.maths.print(more_maths)()
+    dragon.pack.null()(no_maths !scratch.maths)
+    scratch.test.maths.print(no_maths)()
+
+    [ test buffers ]
+    scratch.test.buffer()()
+
+    [ test printing ]
+    scratch.test.printing()()
+
+    [ test file buffer movers ]
+    scratch.test.file_buffer_movers()()
+
+    [ test lists ]
+    scratch.test.list(a, message)()
+
+    [ test bits ]
+    scratch.test.bits()()
+    
+    [ end timer ]
+    dragon.time.now()(time.end)
+    scratch.print.time(time.end)()
+
+    [ print elapsed time ]
+    dragon.integer.subtract(time.end:seconds, time.start:seconds)(seconds_elapsed)
+    dragon.integer.subtract(time.end:nanoseconds, time.start:nanoseconds)(nanoseconds_elapsed)
+    dragon.pack(seconds_elapsed, nanoseconds_elapsed)(time.taken !dragon.time)
+    scratch.print.time(time.taken)()
+}
+
+[ test lists ]
+scratch.test.list(increase !dragon.cell, data !dragon.buffer)() = {
+    [ open list ]
+    dragon.list.open(increase)(list)
+
+    [ append data to list ]
+    [ dragon.list.append.data(list data)() ]
+
+    [ print list contents ]
+    dragon.print.debug_cell(list:allocation:start)()
+    dragon.print.new_line()()
+    dragon.print.debug_cell(list:allocation:end)()
+    dragon.print.new_line()()
+    dragon.print.debug_cell(list:content:start)()
+    dragon.print.new_line()()
+    dragon.print.debug_cell(list:content:end)()
+    dragon.print.new_line()()
+    dragon.print.debug_cell(list:increase)()
+    dragon.print.new_line()()
+
+    [ close list ]
+    dragon.list.close(list)()
+}
+
+[ test file mover ]
+scratch.test.file_buffer_movers()() = {
+    [ test file reader ]
+    [ setup file paths ]
+    dragon.set("./README.md")(readme_path)
+    dragon.set("../dragon-testing/notes/oof.md")(destination_path)
+
+    [ open the file ]
+    dragon.file_to_buffer(readme_path)(buffer)
+
+    [ print file ]
+    dragon.print.buffer_as_string(buffer)()
+
+    [ write to new file ]
+    dragon.buffer_to_file(buffer, destination_path)()
+
+    [ close file ]
+    dragon.buffer.return(buffer)()
+
+    [ delete the file ]
+    dragon.delete_file(destination_path)()
+}
+
+[ test printing ]
+scratch.test.printing()() = {
+    [ setup data ]
+    dragon.set("This is a string.")(string)
+    dragon.set(dragon.integer.127)(cell)
+
+    [ test prints ]
+    dragon.print.buffer_as_string(string)()
+    dragon.print.new_line()()
+    dragon.print.cell_as_binary(cell)()
+    dragon.print.new_line()()
+
+    [ test tab printing ]
+    dragon.set(dragon.integer.2)(tab_count)
+    dragon.print.tabs(tab_count)()
+    dragon.print.buffer_as_string(string)()
+    dragon.print.new_line()()
+}
+
+scratch.test.checking(checking_value !dragon.cell)() = {
+    [ setup variables ]
+    dragon.set(dragon.integer.11)(lower_end)
+    dragon.set(dragon.integer.33)(higher_end)
+    dragon.integer.within_range(lower_end, checking_value, higher_end, dragon.always)(shouldnt_run)
+
+    [ skip print if necessary ]
+    dragon.jump(shouldnt_run, @skip_print)()
+
+    [ print ]
+    dragon.set("Within range!%0A;")(message)
+    dragon.print.buffer_as_string(message)()
+
+    [ offset ]
+    @skip_print
+}
+
+scratch.say(message !dragon.buffer)(w !dragon.cell) = {
+    dragon.print.buffer_as_string(message)()
+    dragon.set(dragon.integer.4321)(w)
+}
+
+scratch.create.box_3D()(output !scratch.box_3D) = {
+    dragon.set(dragon.integer.333)(x)
+    dragon.set(dragon.integer.444)(y)
+    dragon.set(dragon.integer.555)(z)
+    dragon.pack(x, y, z)(output !scratch.box_3D)
+}
+
+scratch.print.box_3D(box !scratch.box_3D)() = {
+    dragon.set("Box: %0A;")(title)
+    dragon.print.buffer_as_string(title)()
+    dragon.set("%09;")(tab)
+    dragon.print.buffer_as_string(tab)()
+    dragon.print.debug_cell(box:x)()
+    dragon.print.new_line()()
+    dragon.print.buffer_as_string(tab)()
+    dragon.print.debug_cell(box:y)()
+    dragon.print.new_line()()
+    dragon.print.buffer_as_string(tab)()
+    dragon.print.debug_cell(box:z)()
+    dragon.print.new_line()()
+}
+
+!scratch.box_3D(x !dragon.cell, y !dragon.cell, z !dragon.cell)
+
+[ test normal jumping ]
+scratch.test.jumping()() = {
+    [ setup loop data ]
+    dragon.set(dragon.integer.0)(bottom)
+    dragon.set(dragon.integer.0)(current)
+    dragon.set(dragon.integer.10)(top)
+    dragon.set(dragon.integer.1)(increment)
+
+    [ setup offset ]
+    @start
+
+    [ check for out of bounds ]
+    dragon.integer.within_range(bottom, current, top, dragon.always)(should_quit)
+    dragon.jump(should_quit, @exit)()
+
+    [ print variable ]
+    dragon.print.debug_cell(current)()
+    dragon.print.new_line()()
+
+    [ increment variable ]
+    dragon.integer.add(current, increment)(current)
+
+    [ jump to loop start ]
+    dragon.jump(dragon.always, @start)()
+
+    [ end loop ]
+    @exit
+}
+
+[ math conglomerate ]
+!scratch.maths(addition !dragon.cell, subtraction !dragon.cell, multiplication !dragon.cell, division !dragon.cell, modulous !dragon.cell)
+
+[ test math ]
+scratch.test.maths(a !dragon.cell, b !dragon.cell)(maths !scratch.maths) = {
+    [ do maths ]
+    dragon.integer.add(a, b)(maths:addition)
+    dragon.integer.subtract(a, b)(maths:subtraction)
+    dragon.integer.multiply(a, b)(maths:multiplication)
+    dragon.integer.divide(a, b)(maths:division)
+    dragon.integer.modulous(a, b)(maths:modulous)
+}
+
+[ print maths ]
+scratch.test.maths.print(maths !scratch.maths)() = {
+    [ print header ]
+    dragon.set("maths(")(title)
+    dragon.set(" ")(space)
+    dragon.print.buffer_as_string(title)()
+
+    [ print values ]
+    dragon.print.debug_cell(maths:addition)()
+    dragon.print.buffer_as_string(space)()
+    dragon.print.debug_cell(maths:subtraction)()
+    dragon.print.buffer_as_string(space)()
+    dragon.print.debug_cell(maths:multiplication)()
+    dragon.print.buffer_as_string(space)()
+    dragon.print.debug_cell(maths:division)()
+    dragon.print.buffer_as_string(space)()
+    dragon.print.debug_cell(maths:modulous)()
+
+    [ print footer ]
+    dragon.set(")%0A;")(footer)
+    dragon.print.buffer_as_string(footer)()
+}
+
+[ test buffers ]
+scratch.test.buffer()() = {
+    [ allocate buffer ]
+    dragon.set(dragon.integer.152)(size)
+    dragon.buffer.request(size)(buffer)
+
+    [ setup string & index data ]
+    dragon.set("Hello World!%0A;")(message)
+    dragon.set(dragon.integer.1)(byte_count)
+
+    [ read character from string ]
+    dragon.address_to_cell(message:start, byte_count)(data)
+
+    [ increment data ]
+    dragon.set(dragon.integer.1)(increment)
+    dragon.integer.add(data, increment)(data)
+
+    [ replace character in string ]
+    dragon.cell_to_address(data, byte_count, message:start)()
+
+    [ print new string ]
+    dragon.print.buffer_as_string(message)()
+
+    [ deallocate buffer ]
+    dragon.buffer.return(buffer)()
+}
+
+[ test bits ]
+scratch.test.bits()() = {
+    [ setup variables ]
+    dragon.set(dragon.binary.1010_0101)(a)
+    dragon.set(dragon.binary.1010_1010)(b)
+    dragon.set(dragon.integer.2)(c)
+
+    [ test bits ]
+    dragon.bits.or(a, b)(or_result)
+    dragon.bits.invert(a)(invert_result)
+    dragon.bits.and(a, b)(and_result)
+    dragon.bits.xor(a, b)(xor_result)
+    dragon.bits.shift_higher(a, c)(shift_higher_result)
+    dragon.bits.shift_lower(a, c)(shift_lower_result)
+    dragon.bits.overwrite(b[mask], a[old_bits], c[new_bits])(overwrite_result)
+
+    [ print results ]
+    dragon.print.cell_as_binary(b)()
+    dragon.print.new_line()()
+    dragon.print.cell_as_binary(or_result)()
+    dragon.print.new_line()()
+    dragon.print.cell_as_binary(invert_result)()
+    dragon.print.new_line()()
+    dragon.print.cell_as_binary(and_result)()
+    dragon.print.new_line()()
+    dragon.print.cell_as_binary(xor_result)()
+    dragon.print.new_line()()
+    dragon.print.cell_as_binary(shift_higher_result)()
+    dragon.print.new_line()()
+    dragon.print.cell_as_binary(shift_lower_result)()
+    dragon.print.new_line()()
+    dragon.print.cell_as_binary(overwrite_result)()
+    dragon.print.new_line()()
+}
+
+[ print time ]
+scratch.print.time(time !dragon.time)() = {
+    dragon.set("Current time: [ seconds: ")(message)
+    dragon.print.buffer_as_string(message)()
+    dragon.print.debug_cell(time:seconds)()
+    dragon.set(", nanoseconds: ")(message)
+    dragon.print.buffer_as_string(message)()
+    dragon.print.debug_cell(time:nanoseconds)()
+    dragon.set("]%0A;")(message)
+    dragon.print.buffer_as_string(message)()
+}

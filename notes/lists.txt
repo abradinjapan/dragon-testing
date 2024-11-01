@@ -1,0 +1,11 @@
+List insert implementation in Dragon steps:
+    1) Check to see if the underlying buffer needs to be expanded.
+        - Check if the data buffer plus the content buffer sizes exceeds the allocation buffer end.
+        - Then allocate the new buffer if necessary.
+    2) Setup pointers for copying.
+    3) Copy buffer from end to start.
+        - Copy the end half of the buffer.
+        - Copy the data into the new buffer.
+        - Copy the start half of the buffer if a new allocation was made.
+    4) If necessary, deallocate old buffer.
+    5) Update list.

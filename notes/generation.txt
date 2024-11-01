@@ -1,0 +1,59 @@
+Generation is the process of taking a blueprint and generating byte code.
+    How that blueprint looks at the moment is in question.
+    Should it be made closer or farther from the metal?
+
+What would a generator that reads a high level description to generate a low level program look like?
+What if we just straight up handed the entire accountling program to the generator?
+    Could it handle it?
+    Im stuck on how to handle structures in terms of converting between structure and cell.
+        Two things, passing variables and declaring variables.
+            Passing variables:
+                Passing the entire variable or a section of that variable.
+            Declaring variables:
+                Packing or getting data from a function call.
+        What if I made all sub-structures their own variables and mapped them to the right cells?
+
+
+
+Things to consider when generating code:
+    - Scope offset jumping.
+    - Normal offsets.
+    - Variables.
+
+
+
+If programming langauges are something that simply works on things above the metal, then why are instructions directly being added a problem?
+    The issue might not be the instructions being directly translated, but rather that I am trying to merge to many things into one piece of code.
+    In other words, different statement types have different code translation philosophies.
+        AKA, direct instructions are handled differently than function calls, even though they share the same syntax.
+
+Maybe it is best for the backend to be versitile in terms of what ways it can generate code.
+    No monolithic code generator for everything, but rather multiple smaller ways to generate code working in harmony.
+    Is filtering those categories critical for accounting?
+        Maybe accounting should break up statement types into their respective forms?
+            Instead of one call statement, it should be broken up into function call statements and instruction statements.
+
+Every type of statement should be listed as a unique entry into the statement type's database.
+
+Accounting should take the parsed statements and turn them into one of the following types of accountling statements:
+    - Operations (add, sub, mult).
+    - Sets.
+    - Packers.
+    - Buffer operations.
+    - Function calls.
+    - Offsets.
+    - Scopes.
+    As you can see, they are not parsing categories, they are code generation categories.
+
+Accounting takes parsling statements and translates them into their respective code generation statement categories.
+
+Variables when declared get cell ranges.
+    Substructures do not automatically come with them.
+One thing to consider is that cell ranges are NOT what are passed to instruction writing c functions, its every individual cell.
+
+How to map structures to individual cells?
+    It probably depends on the type of statement being used.
+    Although no matter what, structure variables must always ultimately be translated into cell IDs.
+Maybe I could create individual structures for each type of compiler defined types?
+    But how to handle user defined function calls?
+Maybe I could recurse through a structure's sub-structures and use that to generate cell passing for user defined functions.

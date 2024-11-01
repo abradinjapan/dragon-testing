@@ -1,0 +1,36 @@
+How to map structures to cells?
+    Maybe keep track of cells in accounting?
+First, structures are not equal to cells.
+    Structures contain maps of cells, but are not cells themselves.
+    All variables are in order sequentially and there is a limit to how many you can have.
+    Therefore, cells are decided in accounting.
+
+
+
+There are 4 ways an argument could be structured.
+    - Master namespace only, not yet declared.
+        - Declares variable and all subvariables.
+    - Master namespace only, already declared.
+        - Just reuses variable.
+            - Check for conflicting types, not an error automatically.
+    - Subnamespace variable, not yet declared.
+        - Error, cannot access sub-variable from a master namespace that doesn't exist.
+    - Subnamespace variable, already declared.
+        - Just reuses the sub-variable.
+            - Check for conflicting types, not an error automatically.
+
+How to divide up cells though?
+    When creating master variables and all their subvariables, give cell ranges based on their sub-indices.
+    And keep track of the next available cell for a variable to be added to.
+
+Structures and variable declarations:
+    When declaring a variable with a structure type, all sub-structures must be declared as variables too.
+        They are accessed as a tree.
+
+When trying to generate all structure members in one list, a problem that arises is that when one upper variable is declared and some lower variables are declared the upper list is split up and range indices cannot be used.
+    However, if the amount of variables is known beforehand, the members can be pre-allocated and filled in as the tree is built.
+Master variables will be declared in one list and member variables will be declared in another list.
+
+Ya know, maybe there can be more than just one buffer dedicated for inter-program data passing.
+
+
