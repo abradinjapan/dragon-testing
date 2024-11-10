@@ -55,10 +55,15 @@ dragon.main()() = {
     scratch.test.file_buffer_movers()()
 
     [ test lists ]
-    scratch.test.list(a, message)()
+    dragon.set("fluffy")(message)
+    dragon.set(dragon.integer.9)(increase)
+    scratch.test.list(increase, message)()
 
     [ test bits ]
     scratch.test.bits()()
+
+    [ test buffer assorted ]
+    scratch.test.buffers_assorted()()
     
     [ end timer ]
     dragon.time.now()(time.end)
@@ -71,28 +76,78 @@ dragon.main()() = {
     scratch.print.time(time.taken)()
 }
 
+[ test buffer operations ]
+scratch.test.buffers_assorted()() = {
+    [ setup variables ]
+    dragon.set("Buffer calculations:%0A;")(message)
+    dragon.set(dragon.integer.10)(start)
+    dragon.set(dragon.integer.20)(end)
+    dragon.pack(start, end)(buffer !dragon.buffer)
+
+    [ do calculations ]
+    dragon.buffer.calculate.length(buffer)(result.length)
+    dragon.buffer.calculate.end_address(start, result.length)(result.end)
+    dragon.buffer.calculate.start_address(result.length, end)(result.start)
+
+    [ print data ]
+    dragon.print.buffer_as_string(message)()
+    dragon.print.debug_cell(result.length)()
+    dragon.print.new_line()()
+    dragon.print.debug_cell(result.end)()
+    dragon.print.new_line()()
+    dragon.print.debug_cell(result.start)()
+    dragon.print.new_line()()
+}
+
 [ test lists ]
 scratch.test.list(increase !dragon.cell, data !dragon.buffer)() = {
     [ open list ]
     dragon.list.open(increase)(list)
 
     [ append data to list ]
-    [ dragon.list.append.data(list data)() ]
+    dragon.list.append.buffer(list, data)()
+    dragon.list.append.buffer(list, data)()
+    dragon.list.append.buffer(list, data)()
 
-    [ print list contents ]
-    dragon.print.debug_cell(list:allocation:start)()
+    [ print list ]
+    scratch.print.list(list)()
     dragon.print.new_line()()
-    dragon.print.debug_cell(list:allocation:end)()
-    dragon.print.new_line()()
-    dragon.print.debug_cell(list:content:start)()
-    dragon.print.new_line()()
-    dragon.print.debug_cell(list:content:end)()
-    dragon.print.new_line()()
-    dragon.print.debug_cell(list:increase)()
+    scratch.print.list_as_string(list)()
     dragon.print.new_line()()
 
     [ close list ]
     dragon.list.close(list)()
+}
+
+[ print list as string ]
+scratch.print.list_as_string(list !dragon.list)() = {
+    [ calculate end of list ]
+    dragon.buffer.calculate.end_address(list:allocation:start, list:length)(string.end)
+    
+    [ create string buffer ]
+    dragon.pack(list:allocation:start, string.end)(string !dragon.buffer)
+
+    [ print buffer ]
+    dragon.print.buffer_as_string(string)()
+}
+
+[ print list raw data ]
+scratch.print.list(list !dragon.list)() = {
+    [ setup strings ]
+    dragon.set("[ ")(header)
+    dragon.set(", ")(separator)
+    dragon.set(" ]")(footer)
+
+    [ print list ]
+    dragon.print.buffer_as_string(header)()
+    dragon.print.debug_cell(list:allocation:start)()
+    dragon.print.buffer_as_string(separator)()
+    dragon.print.debug_cell(list:allocation:end)()
+    dragon.print.buffer_as_string(separator)()
+    dragon.print.debug_cell(list:length)()
+    dragon.print.buffer_as_string(separator)()
+    dragon.print.debug_cell(list:increase)()
+    dragon.print.buffer_as_string(footer)()
 }
 
 [ test file mover ]
