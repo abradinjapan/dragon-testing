@@ -428,6 +428,6 @@ scratch.print.time(time !dragon.time)() = {
     dragon.set(", nanoseconds: ")(message)
     dragon.print.buffer_as_string(message)()
     dragon.print.debug_cell(time:nanoseconds)()
-    dragon.set("]%0A;")(message)
+    dragon.set(" ]%0A;")(message)
     dragon.print.buffer_as_string(message)()
 }
