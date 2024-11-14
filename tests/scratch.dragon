@@ -64,6 +64,12 @@ dragon.main()() = {
 
     [ test buffer assorted ]
     scratch.test.buffers_assorted()()
+
+    [ test structures assorted ]
+    scratch.test.structures_assorted()()
+
+    [ test current assorted ]
+    scratch.test.current_assorted(message)()
     
     [ end timer ]
     dragon.time.now()(time.end)
@@ -74,6 +80,55 @@ dragon.main()() = {
     dragon.integer.subtract(time.end:nanoseconds, time.start:nanoseconds)(nanoseconds_elapsed)
     dragon.pack(seconds_elapsed, nanoseconds_elapsed)(time.taken !dragon.time)
     scratch.print.time(time.taken)()
+}
+
+[ test current assorted ]
+scratch.test.current_assorted(message !dragon.buffer)() = {
+    [ setup current ]
+    dragon.pack(message, message:start)(current !dragon.current)
+
+    [ loop start ]
+    @start
+
+    [ check if in range ]
+    dragon.current.within_range(current, dragon.always)(exit)
+    dragon.jump(exit, @exit)()
+
+    [ print string ]
+    dragon.pack(current:progress, current:buffer:end)(slice !dragon.buffer)
+    dragon.print.buffer_as_string(slice)()
+    dragon.print.new_line()()
+
+    [ increment current ]
+    dragon.integer.add(current:progress, dragon.constant.1)(current:progress)
+
+    [ jump to start ]
+    dragon.jump(dragon.always, @start)()
+
+    [ loop exit ]
+    @exit
+}
+
+[ test structure operations ]
+scratch.test.structures_assorted()() = {
+    [ print test header ]
+    dragon.set("Structure Assorted Data:")(message)
+    dragon.print.buffer_as_string(message)()
+    dragon.print.new_line()()
+
+    [ setup data ]
+    dragon.pack(dragon.constant.0, dragon.constant.1)(a !dragon.buffer)
+    dragon.pack.null()(b !dragon.list)
+
+    [ calculate size ]
+    dragon.structure.byte_size(a)(a.length)
+    dragon.structure.byte_size(b)(b.length)
+
+    [ print length ]
+    dragon.print.debug_cell(a.length)()
+    dragon.print.new_line()()
+    dragon.print.debug_cell(b.length)()
+    dragon.print.new_line()()
 }
 
 [ test buffer operations ]
