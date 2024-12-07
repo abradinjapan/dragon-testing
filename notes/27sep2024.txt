@@ -1,0 +1,18 @@
+I get the feeling that some of the power of a programming language comes from creating data and functionality from templates.
+When thinking about debugging information, I realized that other entire functions could run before the user code even started in order to create debug information.
+Thinking in this style, what other kinds of information could I create around user defined types and functions?
+    - Debugging info.
+        - Function name.
+        - Function IO.
+        - Function offsets & scopes.
+        - Function variables.
+And could this information be used to debug a program live?
+    Yes.
+
+I would perfer use json in order to embed debug data, but it comes with the problem of how to properly translate buffers.
+    A buffer written in json could be a few things.
+        - An ascii/utf-8 string.
+        - Two pointers.
+        - A buffer of bytes.
+    How to specify when serializing and deserializing what format is which?
+        Tags.

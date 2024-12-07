@@ -2,5 +2,5 @@
 2) Declare name and name alias in specifications.
 3) Add function headers to list.
 4) Create accounting function that checks for specified statement(s).
-5) Add accounting statement function to list.
+5) Add accounting statement function to check list.
 6) Implement anvil code in code generator.

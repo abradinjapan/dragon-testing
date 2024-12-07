@@ -1,2 +1,29 @@
 Trust jumping is the act of directly jumping directly from one program to another in order to run code.
     Like jumping to and from plug and play modules.
+
+But how can parameters be passed like a normal function?
+    Somehow, they must be written to the created context somehow before invoked.
+    Also, any function must be callable, as dragon.main()() would have different parameters.
+        So it would just be easier to call any function instead of just dragon.main.
+
+Maybe it could work like this:
+    dragon.call.trust(context, instruction_count, inputs)(outputs)
+
+Maybe individual sections of code could be generated that are plug and play to the currently running program.
+    Generating one or more functions in one buffer without a kickstarter and calling one of those functions.
+    Doing this however requires having compile time information embedded and used at runtime.
+        But what kind of information?
+            - Function name, io names and io types
+            - Variable names.
+            - Line numbers.
+            - Instruction count.
+        Would it be possible to embed an anvil list into the metadata in order to embed io lists?
+            Not really, it would be better to just embed the data and organize it into usable types at run time instead of compile time.
+            Although, it is the most effective solution.
+        What if code metadata is generated in between the kickstarter and the entry point function?
+            Embedding the information directly would likely not work as a list must be deallocatable and built in data is part of a larger buffer.
+            But if we could open the data prior to the entry point start and get the data from calls then they could be deallocated when the program quits and be read and modified normally.
+
+What if meta code was standard in all user defined functions?
+
+What if we made a type for each function's metadata?

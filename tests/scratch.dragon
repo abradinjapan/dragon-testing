@@ -70,6 +70,9 @@ dragon.main()() = {
 
     [ test current assorted ]
     scratch.test.current_assorted(message)()
+
+    [ test compiler assorted ]
+    scratch.test.compiler_assorted()()
     
     [ end timer ]
     dragon.time.now()(time.end)
@@ -129,6 +132,16 @@ scratch.test.structures_assorted()() = {
     dragon.print.new_line()()
     dragon.print.debug_cell(b.length)()
     dragon.print.new_line()()
+
+    [ open list ]
+    dragon.set(dragon.integer.16)(increase)
+    dragon.buffer.request(increase)(buffer)
+    
+    [ write structure ]
+    [ dragon.structure_to_buffer()() ]
+
+    [ close buffer ]
+    dragon.buffer.return(buffer)()
 }
 
 [ test buffer operations ]
@@ -176,11 +189,8 @@ scratch.test.list(increase !dragon.cell, data !dragon.buffer)() = {
 
 [ print list as string ]
 scratch.print.list_as_string(list !dragon.list)() = {
-    [ calculate end of list ]
-    dragon.buffer.calculate.end_address(list:allocation:start, list:length)(string.end)
-    
     [ create string buffer ]
-    dragon.pack(list:allocation:start, string.end)(string !dragon.buffer)
+    dragon.list.calculate.content_buffer(list)(string)
 
     [ print buffer ]
     dragon.print.buffer_as_string(string)()
@@ -194,14 +204,23 @@ scratch.print.list(list !dragon.list)() = {
     dragon.set(" ]")(footer)
 
     [ print list ]
+    [ print allocation ]
     dragon.print.buffer_as_string(header)()
     dragon.print.debug_cell(list:allocation:start)()
     dragon.print.buffer_as_string(separator)()
     dragon.print.debug_cell(list:allocation:end)()
+
+    [ print length ]
     dragon.print.buffer_as_string(separator)()
     dragon.print.debug_cell(list:length)()
+
+    [ print increase ]
     dragon.print.buffer_as_string(separator)()
     dragon.print.debug_cell(list:increase)()
+
+    [ print stats ]
+    dragon.print.buffer_as_string(separator)()
+    dragon.print.debug_cell(list:append_count)()
     dragon.print.buffer_as_string(footer)()
 }
 
@@ -323,7 +342,7 @@ scratch.test.jumping()() = {
 }
 
 [ math conglomerate ]
-!scratch.maths(addition !dragon.cell, subtraction !dragon.cell, multiplication !dragon.cell, division !dragon.cell, modulous !dragon.cell)
+!scratch.maths(addition !dragon.cell #dragon.json.boolean, subtraction !dragon.cell, multiplication !dragon.cell, division !dragon.cell, modulous !dragon.cell)
 
 [ test math ]
 scratch.test.maths(a !dragon.cell, b !dragon.cell)(maths !scratch.maths) = {
@@ -369,14 +388,14 @@ scratch.test.buffer()() = {
     dragon.set(dragon.integer.1)(byte_count)
 
     [ read character from string ]
-    dragon.address_to_cell(message:start, byte_count)(data)
+    dragon.address_to_cell(message:start, byte_count)(data, advancement)
 
     [ increment data ]
     dragon.set(dragon.integer.1)(increment)
     dragon.integer.add(data, increment)(data)
 
     [ replace character in string ]
-    dragon.cell_to_address(data, byte_count, message:start)()
+    dragon.cell_to_address(data, byte_count, message:start)(advancement)
 
     [ print new string ]
     dragon.print.buffer_as_string(message)()
@@ -430,4 +449,37 @@ scratch.print.time(time !dragon.time)() = {
     dragon.print.debug_cell(time:nanoseconds)()
     dragon.set(" ]%0A;")(message)
     dragon.print.buffer_as_string(message)()
+}
+
+[ test tags ]
+!scratch.tags(
+    buffer !dragon.buffer #dragon.json.buffer.addresses
+)
+
+[ test compiler assorted ]
+scratch.test.compiler_assorted()() = {
+    [ get source file ]
+    dragon.set("../dragon-testing/tests/hello-world.dragon")(file_path)
+    dragon.file_to_buffer(file_path)(source)
+
+    [ print file ]
+    dragon.print.buffer_as_string(source)()
+    dragon.print.new_line()()
+
+    [ append source file to source file list ]
+    dragon.structure.byte_size(source)(increase)
+    dragon.list.open(increase)(sources)
+    dragon.print.new_line()()
+    dragon.list.append.structure(sources, source)()
+    dragon.print.new_line()()
+
+    [ get buffer of buffers ]
+    dragon.list.calculate.content_buffer(sources)(sources.buffer)
+
+    [ compile ]
+    dragon.compiler.compile(sources.buffer, dragon.constant.0, dragon.constant.1)(byte_code, error.occured, error.message, error.location.file_index, error.location.line_number, error.location.character_index)
+
+    [ print message ]
+    dragon.print.buffer_as_string(error.message)()
+    dragon.print.new_line()()
 }
