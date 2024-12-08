@@ -477,9 +477,35 @@ scratch.test.compiler_assorted()() = {
     dragon.list.calculate.content_buffer(sources)(sources.buffer)
 
     [ compile ]
-    dragon.compiler.compile(sources.buffer, dragon.constant.0, dragon.constant.1)(byte_code, error.occured, error.message, error.location.file_index, error.location.line_number, error.location.character_index)
+    dragon.compiler.compile(sources.buffer, dragon.false, dragon.true)(byte_code, error.occured, error.message, error.location.file_index, error.location.line_number, error.location.character_index)
 
-    [ print message ]
-    dragon.print.buffer_as_string(error.message)()
+    [ print message & skip context creation ]
+    @print_compilation_error error.occured = {
+        dragon.print.buffer_as_string(error.message)()
+        dragon.print.new_line()()
+        dragon.jump(dragon.always, @clean_up)()
+    }
+
+    [ setup context ]
+    dragon.context.open()(context)
+    dragon.context.install_program(context, byte_code)()
+
+    [ do stats for context ]
+    dragon.buffer.calculate.length(context)(context.length)
+    dragon.print.debug_cell(context.length)()
     dragon.print.new_line()()
+
+    [ run code ]
+    dragon.set(dragon.integer.n1)(instruction_count)
+    dragon.context.run(context, instruction_count)()
+
+    [ clean up context ]
+    @clean_up_context
+    dragon.buffer.return(context)()
+
+    [ clean up ]
+    @clean_up
+    dragon.buffer.return(byte_code)()
+    dragon.buffer.return(source)()
+    dragon.list.close(sources)()
 }
