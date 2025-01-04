@@ -1,0 +1,13 @@
+Things that need to be improved:
+    - Type aliases need to be implemented.
+    - Constant values somehow are necessary because they take up registers when being passed around in structures.
+    - Compilation calls should be able to be inline.
+    - Debugging.
+
+Things that work well:
+    - Function call IO unanimity.
+
+Tricks that could improve code implementation:
+    - A type of argument that allows for any structure / variable type.
+    - Lexing files individually while parsing files together on the same loop.
+      This instead of parsing files on individual loops.

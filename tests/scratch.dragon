@@ -459,7 +459,7 @@ scratch.print.time(time !dragon.time)() = {
 [ test compiler assorted ]
 scratch.test.compiler_assorted()() = {
     [ get source file ]
-    dragon.set("../dragon-testing/tests/hello-world.dragon")(file_path)
+    dragon.set("../dragon-testing/demonstration/hello-world.dragon")(file_path)
     dragon.file_to_buffer(file_path)(source)
 
     [ print file ]
@@ -477,7 +477,7 @@ scratch.test.compiler_assorted()() = {
     dragon.list.calculate.content_buffer(sources)(sources.buffer)
 
     [ compile ]
-    dragon.compiler.compile(sources.buffer, dragon.false, dragon.true)(byte_code, error.occured, error.message, error.location.file_index, error.location.line_number, error.location.character_index)
+    dragon.compiler.compile(sources.buffer, dragon.false, dragon.true)(byte_code, debug_information, error.occured, error.message, error.location.file_index, error.location.line_number, error.location.character_index)
 
     [ print message & skip context creation ]
     @print_compilation_error error.occured = {
