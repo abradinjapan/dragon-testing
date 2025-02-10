@@ -10,23 +10,23 @@ dragon.main()() = {
 
     [ print variables ]
     dragon.print.buffer_as_string(message)()
-    dragon.print.debug_cell(a)()
+    dragon.print.integer.unsigned(a)()
     dragon.print.new_line()()
-    dragon.print.debug_cell(buff:start)()
+    dragon.print.integer.unsigned(buff:start)()
     dragon.print.new_line()()
 
     @oof
 
     @scope dragon.never = {
         dragon.set(dragon.integer.200)(b)
-        dragon.print.debug_cell(b)()
+        dragon.print.integer.unsigned(b)()
         dragon.print.new_line()()
 
         @electric_boogaloo
     }
 
     scratch.say(message)(value)
-    dragon.print.debug_cell(value)()
+    dragon.print.integer.unsigned(value)()
     dragon.print.new_line()()
 
     scratch.create.box_3D()(box)
@@ -128,9 +128,9 @@ scratch.test.structures_assorted()() = {
     dragon.structure.byte_size(b)(b.length)
 
     [ print length ]
-    dragon.print.debug_cell(a.length)()
+    dragon.print.integer.unsigned(a.length)()
     dragon.print.new_line()()
-    dragon.print.debug_cell(b.length)()
+    dragon.print.integer.unsigned(b.length)()
     dragon.print.new_line()()
 
     [ open list ]
@@ -159,11 +159,11 @@ scratch.test.buffers_assorted()() = {
 
     [ print data ]
     dragon.print.buffer_as_string(message)()
-    dragon.print.debug_cell(result.length)()
+    dragon.print.integer.unsigned(result.length)()
     dragon.print.new_line()()
-    dragon.print.debug_cell(result.end)()
+    dragon.print.integer.unsigned(result.end)()
     dragon.print.new_line()()
-    dragon.print.debug_cell(result.start)()
+    dragon.print.integer.unsigned(result.start)()
     dragon.print.new_line()()
 }
 
@@ -173,9 +173,9 @@ scratch.test.list(increase !dragon.cell, data !dragon.buffer)() = {
     dragon.list.open(increase)(list)
 
     [ append data to list ]
-    dragon.list.append.buffer(list, data)()
-    dragon.list.append.buffer(list, data)()
-    dragon.list.append.buffer(list, data)()
+    dragon.list.append.buffer_data(list, data)(list)
+    dragon.list.append.buffer_data(list, data)(list)
+    dragon.list.append.buffer_data(list, data)(list)
 
     [ print list ]
     scratch.print.list(list)()
@@ -206,21 +206,19 @@ scratch.print.list(list !dragon.list)() = {
     [ print list ]
     [ print allocation ]
     dragon.print.buffer_as_string(header)()
-    dragon.print.debug_cell(list:allocation:start)()
+    dragon.print.integer.unsigned(list:allocation:start)()
     dragon.print.buffer_as_string(separator)()
-    dragon.print.debug_cell(list:allocation:end)()
+    dragon.print.integer.unsigned(list:allocation:end)()
 
     [ print length ]
     dragon.print.buffer_as_string(separator)()
-    dragon.print.debug_cell(list:length)()
+    dragon.print.integer.unsigned(list:length)()
 
     [ print increase ]
     dragon.print.buffer_as_string(separator)()
-    dragon.print.debug_cell(list:increase)()
+    dragon.print.integer.unsigned(list:increase)()
 
-    [ print stats ]
-    dragon.print.buffer_as_string(separator)()
-    dragon.print.debug_cell(list:append_count)()
+    [ print footer ]
     dragon.print.buffer_as_string(footer)()
 }
 
@@ -256,7 +254,7 @@ scratch.test.printing()() = {
     [ test prints ]
     dragon.print.buffer_as_string(string)()
     dragon.print.new_line()()
-    dragon.print.cell_as_binary(cell)()
+    dragon.print.binary.lower_to_higher(cell)()
     dragon.print.new_line()()
 
     [ test tab printing ]
@@ -300,13 +298,13 @@ scratch.print.box_3D(box !scratch.box_3D)() = {
     dragon.print.buffer_as_string(title)()
     dragon.set("%09;")(tab)
     dragon.print.buffer_as_string(tab)()
-    dragon.print.debug_cell(box:x)()
+    dragon.print.integer.unsigned(box:x)()
     dragon.print.new_line()()
     dragon.print.buffer_as_string(tab)()
-    dragon.print.debug_cell(box:y)()
+    dragon.print.integer.unsigned(box:y)()
     dragon.print.new_line()()
     dragon.print.buffer_as_string(tab)()
-    dragon.print.debug_cell(box:z)()
+    dragon.print.integer.unsigned(box:z)()
     dragon.print.new_line()()
 }
 
@@ -328,7 +326,7 @@ scratch.test.jumping()() = {
     dragon.jump(should_quit, @exit)()
 
     [ print variable ]
-    dragon.print.debug_cell(current)()
+    dragon.print.integer.unsigned(current)()
     dragon.print.new_line()()
 
     [ increment variable ]
@@ -362,15 +360,15 @@ scratch.test.maths.print(maths !scratch.maths)() = {
     dragon.print.buffer_as_string(title)()
 
     [ print values ]
-    dragon.print.debug_cell(maths:addition)()
+    dragon.print.integer.unsigned(maths:addition)()
     dragon.print.buffer_as_string(space)()
-    dragon.print.debug_cell(maths:subtraction)()
+    dragon.print.integer.unsigned(maths:subtraction)()
     dragon.print.buffer_as_string(space)()
-    dragon.print.debug_cell(maths:multiplication)()
+    dragon.print.integer.unsigned(maths:multiplication)()
     dragon.print.buffer_as_string(space)()
-    dragon.print.debug_cell(maths:division)()
+    dragon.print.integer.unsigned(maths:division)()
     dragon.print.buffer_as_string(space)()
-    dragon.print.debug_cell(maths:modulous)()
+    dragon.print.integer.unsigned(maths:modulous)()
 
     [ print footer ]
     dragon.set(")%0A;")(footer)
@@ -421,21 +419,21 @@ scratch.test.bits()() = {
     dragon.bits.overwrite(b[mask], a[old_bits], c[new_bits])(overwrite_result)
 
     [ print results ]
-    dragon.print.cell_as_binary(b)()
+    dragon.print.binary.lower_to_higher(b)()
     dragon.print.new_line()()
-    dragon.print.cell_as_binary(or_result)()
+    dragon.print.binary.lower_to_higher(or_result)()
     dragon.print.new_line()()
-    dragon.print.cell_as_binary(invert_result)()
+    dragon.print.binary.lower_to_higher(invert_result)()
     dragon.print.new_line()()
-    dragon.print.cell_as_binary(and_result)()
+    dragon.print.binary.lower_to_higher(and_result)()
     dragon.print.new_line()()
-    dragon.print.cell_as_binary(xor_result)()
+    dragon.print.binary.lower_to_higher(xor_result)()
     dragon.print.new_line()()
-    dragon.print.cell_as_binary(shift_higher_result)()
+    dragon.print.binary.lower_to_higher(shift_higher_result)()
     dragon.print.new_line()()
-    dragon.print.cell_as_binary(shift_lower_result)()
+    dragon.print.binary.lower_to_higher(shift_lower_result)()
     dragon.print.new_line()()
-    dragon.print.cell_as_binary(overwrite_result)()
+    dragon.print.binary.lower_to_higher(overwrite_result)()
     dragon.print.new_line()()
 }
 
@@ -443,10 +441,10 @@ scratch.test.bits()() = {
 scratch.print.time(time !dragon.time)() = {
     dragon.set("Current time: [ seconds: ")(message)
     dragon.print.buffer_as_string(message)()
-    dragon.print.debug_cell(time:seconds)()
+    dragon.print.integer.unsigned(time:seconds)()
     dragon.set(", nanoseconds: ")(message)
     dragon.print.buffer_as_string(message)()
-    dragon.print.debug_cell(time:nanoseconds)()
+    dragon.print.integer.unsigned(time:nanoseconds)()
     dragon.set(" ]%0A;")(message)
     dragon.print.buffer_as_string(message)()
 }
@@ -469,15 +467,13 @@ scratch.test.compiler_assorted()() = {
     [ append source file to source file list ]
     dragon.structure.byte_size(source)(increase)
     dragon.list.open(increase)(sources)
-    dragon.print.new_line()()
-    dragon.list.append.structure(sources, source)()
-    dragon.print.new_line()()
+    dragon.list.append.buffer(sources, source)(sources)
 
     [ get buffer of buffers ]
     dragon.list.calculate.content_buffer(sources)(sources.buffer)
 
     [ compile ]
-    dragon.compiler.compile(sources.buffer, dragon.false, dragon.true)(byte_code, debug_information, error.occured, error.message, error.location.file_index, error.location.line_number, error.location.character_index)
+    dragon.compiler.compile(sources.buffer, dragon.true, dragon.false, dragon.true)(byte_code, debug_information, error.occured, error.message, error.location.file_index, error.location.line_number, error.location.character_index)
 
     [ print message & skip context creation ]
     @print_compilation_error error.occured = {
@@ -492,7 +488,7 @@ scratch.test.compiler_assorted()() = {
 
     [ do stats for context ]
     dragon.buffer.calculate.length(context)(context.length)
-    dragon.print.debug_cell(context.length)()
+    dragon.print.integer.unsigned(context.length)()
     dragon.print.new_line()()
 
     [ run code ]
