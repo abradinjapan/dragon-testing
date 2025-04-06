@@ -73,6 +73,12 @@ dragon.main()() = {
 
     [ test compiler assorted ]
     scratch.test.compiler_assorted()()
+
+    [ test allocation finder ]
+    scratch.test.find_allocation()()
+
+    [ test allocation limit ]
+    scratch.test.allocation_limits()()
     
     [ end timer ]
     dragon.time.now()(time.end)
@@ -469,6 +475,13 @@ scratch.test.compiler_assorted()() = {
     dragon.list.open(increase)(sources)
     dragon.list.append.buffer(sources, source)(sources)
 
+    [ DEBUG TEST - give incorrect buffer size ]
+    [ dragon.integer.add(sources:length, dragon.constant.1)(sources:length) ]
+
+    [ DEBUG TEST - append null buffer ]
+    [ dragon.pack.null()(null_buffer !dragon.buffer)
+    dragon.list.append.buffer(sources, null_buffer)(sources) ]
+
     [ get buffer of buffers ]
     dragon.list.calculate.content_buffer(sources)(sources.buffer)
 
@@ -504,4 +517,86 @@ scratch.test.compiler_assorted()() = {
     dragon.buffer.return(byte_code)()
     dragon.buffer.return(source)()
     dragon.list.close(sources)()
+}
+
+[ test allocation checker ]
+scratch.test.find_allocation()() = {
+    [ setup allocation ]
+    dragon.buffer.request(dragon.constant.64)(real_allocation)
+
+    [ setup searches ]
+    dragon.copy(real_allocation)(search_1)
+    dragon.copy(real_allocation)(search_2)
+    dragon.copy(real_allocation)(search_3)
+
+    [ test search 1 ]
+    [ must check for exact same buffer ]
+    dragon.find_allocation(search_1)(found, found_allocation)
+
+    [ print findings ]
+    scratch.test.find_allocation.print.result(found, found_allocation)()
+    dragon.print.new_line()()
+
+    [ test search 2 ]
+    [ make test 2 beyond the bounds of the allocation ]
+    dragon.integer.subtract(search_2:start, dragon.constant.1)(search_2:start)
+    dragon.integer.add(search_2:end, dragon.constant.1)(search_2:end)
+
+    [ test search ]
+    dragon.find_allocation(search_2)(found, found_allocation)
+
+    [ print findings ]
+    scratch.test.find_allocation.print.result(found, found_allocation)()
+    dragon.print.new_line()()
+
+    [ test search 3 ]
+    [ make test 3 within the bounds of the allocation ]
+    dragon.integer.add(search_3:start, dragon.constant.1)(search_3:start)
+    dragon.integer.subtract(search_3:end, dragon.constant.1)(search_3:end)
+
+    [ test search ]
+    dragon.find_allocation(search_3)(found, found_allocation)
+
+    [ print findings ]
+    scratch.test.find_allocation.print.result(found, found_allocation)()
+    dragon.print.new_line()()
+
+    [ clean up test allocation ]
+    dragon.buffer.return(real_allocation)()
+}
+
+[ print result from allocation test ]
+scratch.test.find_allocation.print.result(found !dragon.cell, source_allocation !dragon.buffer)() = {
+    [ setup strings ]
+    dragon.set("[ ")(header)
+    dragon.set(", ")(separator)
+    dragon.set(" ]")(footer)
+
+    [ print result ]
+    dragon.print.buffer_as_string(header)()
+    dragon.print.integer.unsigned(found)()
+    dragon.print.buffer_as_string(separator)()
+    dragon.print.integer.unsigned(source_allocation:start)()
+    dragon.print.buffer_as_string(separator)()
+    dragon.print.integer.unsigned(source_allocation:end)()
+    dragon.print.buffer_as_string(footer)()
+}
+
+[ check allocation limit ]
+scratch.test.allocation_limits()() = {
+    [ setup size ]
+    dragon.set(dragon.hexadecimal.1000000000)(size)
+
+    [ allocate ]
+    dragon.buffer.request(size)(allocation)
+
+    [ print allocation ]
+    dragon.print.buffer(allocation)()
+
+    [ return allocation ]
+    dragon.buffer.return(allocation)()
+
+    [ yay! no crash! ]
+    dragon.set("No crashes with the eternal dragon!%0a;")(message)
+    dragon.print.buffer_as_string(message)()
 }
