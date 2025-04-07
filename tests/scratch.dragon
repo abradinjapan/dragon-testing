@@ -100,7 +100,7 @@ scratch.test.current_assorted(message !dragon.buffer)() = {
     @start
 
     [ check if in range ]
-    dragon.current.within_range(current, dragon.always)(exit)
+    dragon.current.within_range(current)(continue, exit)
     dragon.jump(exit, @exit)()
 
     [ print string ]
@@ -274,7 +274,7 @@ scratch.test.checking(checking_value !dragon.cell)() = {
     [ setup variables ]
     dragon.set(dragon.integer.11)(lower_end)
     dragon.set(dragon.integer.33)(higher_end)
-    dragon.integer.within_range(lower_end, checking_value, higher_end, dragon.always)(shouldnt_run)
+    dragon.integer.within_range(lower_end, checking_value, higher_end)(should_run, shouldnt_run)
 
     [ skip print if necessary ]
     dragon.jump(shouldnt_run, @skip_print)()
@@ -328,7 +328,7 @@ scratch.test.jumping()() = {
     @start
 
     [ check for out of bounds ]
-    dragon.integer.within_range(bottom, current, top, dragon.always)(should_quit)
+    dragon.integer.within_range(bottom, current, top)(shouldnt_quit, should_quit)
     dragon.jump(should_quit, @exit)()
 
     [ print variable ]
