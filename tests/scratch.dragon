@@ -485,12 +485,15 @@ scratch.test.compiler_assorted()() = {
     [ get buffer of buffers ]
     dragon.list.calculate.content_buffer(sources)(sources.buffer)
 
+    [ create settings ]
+    dragon.pack(dragon.true, dragon.false, dragon.true)(settings !dragon.compiler.settings)
+
     [ compile ]
-    dragon.compiler.compile(sources.buffer, dragon.true, dragon.false, dragon.true)(byte_code, debug_information, error.occured, error.message, error.location.file_index, error.location.line_number, error.location.character_index)
+    dragon.compiler.compile(sources.buffer, settings)(byte_code, debug_information, error)
 
     [ print message & skip context creation ]
-    @print_compilation_error error.occured = {
-        dragon.print.buffer_as_string(error.message)()
+    @print_compilation_error error:occured = {
+        dragon.print.buffer_as_string(error:message)()
         dragon.print.new_line()()
         dragon.jump(dragon.always, @clean_up)()
     }
