@@ -79,6 +79,9 @@ dragon.main()() = {
 
     [ test allocation limit ]
     scratch.test.allocation_limits()()
+
+    [ test time functions ]
+    scratch.test.time_assorted()()
     
     [ end timer ]
     dragon.time.now()(time.end)
@@ -603,4 +606,28 @@ scratch.test.allocation_limits()() = {
     [ yay! no crash! ]
     dragon.set("No crashes with the eternal dragon!%0a;")(message)
     dragon.print.buffer_as_string(message)()
+}
+
+[ test time functions ]
+scratch.test.time_assorted()() = {
+    [ setup constants ]
+    dragon.set(dragon.integer.1_000_000_000)(nanoseconds_in_second)
+    dragon.integer.subtract(nanoseconds_in_second, dragon.constant.1)(just_under)
+
+    [ setup dummy times ]
+    dragon.pack(dragon.constant.0, just_under)(a !dragon.time)
+    dragon.pack(dragon.constant.0, dragon.constant.1)(b !dragon.time)
+
+    [ print time ]
+    scratch.print.time(a)()
+    scratch.print.time(b)()
+
+    [ add times ]
+    dragon.time.add(a, b)(c)
+
+    [ print result ]
+    scratch.print.time(c)()
+
+    [ print space ]
+    dragon.print.new_line()()
 }
