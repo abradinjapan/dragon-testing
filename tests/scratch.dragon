@@ -92,6 +92,17 @@ dragon.main()() = {
     dragon.integer.subtract(time.end:nanoseconds, time.start:nanoseconds)(nanoseconds_elapsed)
     dragon.pack(seconds_elapsed, nanoseconds_elapsed)(time.taken !dragon.time)
     scratch.print.time(time.taken)()
+
+    [ test stop ]
+    dragon.set("Stopping!%0a;")(message)
+    dragon.print.buffer_as_string(message)()
+
+    [ stop ]
+    [ dragon.execution.stop()() ]
+
+    [ print failure ]
+    dragon.set("Apparently not stopping!%0a;")(message)
+    dragon.print.buffer_as_string(message)()
 }
 
 [ test current assorted ]
@@ -489,7 +500,7 @@ scratch.test.compiler_assorted()() = {
     dragon.list.calculate.content_buffer(sources)(sources.buffer)
 
     [ create settings ]
-    dragon.pack(dragon.true, dragon.false, dragon.true)(settings !dragon.compiler.settings)
+    dragon.compiler.configure.default_compile()(settings)
 
     [ compile ]
     dragon.compiler.compile(sources.buffer, settings)(byte_code, debug_information, compiler.error)
@@ -599,6 +610,7 @@ scratch.test.allocation_limits()() = {
 
     [ print allocation ]
     dragon.print.buffer(allocation)()
+    dragon.print.new_line()()
 
     [ return allocation ]
     dragon.buffer.return(allocation)()
