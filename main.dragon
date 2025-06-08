@@ -1,0 +1,13 @@
+[ main ]
+dragon.main()() = {
+    [ run main test ]
+    test.scratch()()
+}
+
+[ basic language abilities ]
+test.scratch()() = {
+    [ setup file path ]
+    dragon.set("./tests/scratch.dragon")(file_path)
+    [ run test ]
+    test.just_run.one_file(file_path)()
+}

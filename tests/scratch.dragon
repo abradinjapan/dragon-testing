@@ -82,6 +82,9 @@ dragon.main()() = {
 
     [ test time functions ]
     scratch.test.time_assorted()()
+
+    [ test stack functionality ]
+    scratch.test.stack_assorted()()
     
     [ end timer ]
     dragon.time.now()(time.end)
@@ -642,4 +645,32 @@ scratch.test.time_assorted()() = {
 
     [ print space ]
     dragon.print.new_line()()
+}
+
+[ test stack functions ]
+scratch.test.stack_assorted()() = {
+    [ print current stack ]
+    dragon.print.current(dragon.call_stack)()
+    dragon.print.new_line()()
+
+    [ allocate new stack ]
+    dragon.set(dragon.integer.100000)(length)
+    dragon.buffer.request(length)(new_stack.buffer)
+    dragon.pack(new_stack.buffer, new_stack.buffer:start)(new_stack !dragon.current)
+
+    [ save old stack ]
+    dragon.copy(dragon.call_stack)(old_stack)
+
+    [ install new stack ]
+    dragon.copy(new_stack)(dragon.call_stack)
+
+    [ print stack ]
+    dragon.print.current(dragon.call_stack)()
+    dragon.print.new_line()()
+
+    [ reinstall old stack ]
+    dragon.copy(old_stack)(dragon.call_stack)
+
+    [ clean up old stack ]
+    dragon.buffer.return(new_stack.buffer)()
 }
