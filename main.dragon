@@ -1,13 +1,26 @@
 [ main ]
 dragon.main()() = {
-    [ run main test ]
+    [ run foundationals test ]
     test.scratch()()
+
+    [ test json ]
+    test.json()()
 }
 
 [ basic language abilities ]
 test.scratch()() = {
     [ setup file path ]
     dragon.set("./tests/scratch.dragon")(file_path)
+
+    [ run test ]
+    test.just_run.one_file(file_path)()
+}
+
+[ test json abilities ]
+test.json()() = {
+    [ setup file path ]
+    dragon.set("./tests/test_json.dragon")(file_path)
+
     [ run test ]
     test.just_run.one_file(file_path)()
 }
