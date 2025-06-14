@@ -5,6 +5,9 @@ dragon.main()() = {
 
     [ test json ]
     test.json()()
+
+    [ test anvil ]
+    test.anvil()()
 }
 
 [ basic language abilities ]
@@ -20,6 +23,15 @@ test.scratch()() = {
 test.json()() = {
     [ setup file path ]
     dragon.set("./tests/test_json.dragon")(file_path)
+
+    [ run test ]
+    test.just_run.one_file(file_path)()
+}
+
+[ test anvil abilities ]
+test.anvil()() = {
+    [ setup file path ]
+    dragon.set("./tests/test_anvil.dragon")(file_path)
 
     [ run test ]
     test.just_run.one_file(file_path)()

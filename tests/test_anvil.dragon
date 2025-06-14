@@ -1,0 +1,66 @@
+[ main ]
+dragon.main()() = {
+    test.anvil()()
+}
+
+[ run test ]
+test.anvil()() = {
+    [ setup workspace ]
+    dragon.forge.workspace.open()(workspace)
+
+    [ do measuring pass ]
+    dragon.forge.workspace.setup_pass(workspace, dragon.false)(workspace)
+    test.write_program(workspace)(workspace)
+
+    [ do writing pass ]
+    dragon.forge.workspace.setup_pass(workspace, dragon.true)(workspace)
+    test.write_program(workspace)(workspace)
+
+    [ get program buffer ]
+    dragon.copy(workspace:program)(program)
+
+    [ install program into context ]
+    dragon.context.open()(context)
+    dragon.context.install_program(context, program)()
+
+    [ run program ]
+    dragon.set(dragon.integer.n1)(instruction_count)
+    dragon.context.run(context, instruction_count)()
+
+    [ clean up ]
+    dragon.buffer.return(context)()
+    dragon.buffer.return(program)()
+}
+
+[ generate program ]
+test.write_program(workspace !dragon.forge.workspace)(workspace !dragon.forge.workspace) = {
+    [ setup message string ]
+    dragon.set("The dragon awakens!%0a;")(message)
+
+    [ setup character cell ]
+    dragon.set(dragon.integer.8192[ FIX LATER ])(write_to)
+
+    [ generate character printers ]
+    [ setup current ]
+    dragon.pack(message, message:start)(current !dragon.current)
+
+    [ character printing loop ]
+    @write_prints dragon.always = {
+        [ check if more characters to print, otherwise exit loop ]
+        dragon.current.within_range(current)(in_range, out_of_range)
+        dragon.jump.bottom(out_of_range, @write_prints)()
+
+        [ get character ]
+        dragon.address_to_cell(current:progress, dragon.constant.1)(character, current:progress)
+
+        [ generate instructions ]
+        dragon.anvil.write.instruction.write_cell(workspace, character, write_to)(workspace)
+        dragon.anvil.write.instruction.debug__putchar(workspace, write_to)(workspace)
+
+        [ jump to loop start ]
+        dragon.jump.top(dragon.always, @write_prints)()
+    }
+
+    [ write program end ]
+    dragon.anvil.write.instruction.stop(workspace)(workspace)
+}
