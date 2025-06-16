@@ -55,7 +55,7 @@ test.write_program(workspace !dragon.forge.workspace)(workspace !dragon.forge.wo
 
         [ generate instructions ]
         dragon.anvil.write.instruction.write_cell(workspace, character, write_to)(workspace)
-        dragon.anvil.write.instruction.debug__putchar(workspace, write_to)(workspace)
+        dragon.anvil.write.instruction.debug.putchar(workspace, write_to)(workspace)
 
         [ jump to loop start ]
         dragon.jump.top(dragon.always, @write_prints)()
