@@ -159,9 +159,17 @@ scratch.test.structures_assorted()() = {
     [ open list ]
     dragon.set(dragon.integer.16)(increase)
     dragon.buffer.request(increase)(buffer)
-    
-    [ write structure ]
-    [ dragon.structure_to_buffer()() ]
+
+    [ pack increment ]
+    dragon.set("Pack Increment:%0a;")(message)
+    dragon.print.buffer_as_string(message)()
+    dragon.pack.increment(dragon.constant.5, dragon.constant.2)(output !scratch.box_3D)
+    dragon.print.integer.unsigned(output:x)()
+    dragon.print.new_line()()
+    dragon.print.integer.unsigned(output:y)()
+    dragon.print.new_line()()
+    dragon.print.integer.unsigned(output:z)()
+    dragon.print.new_line()()
 
     [ close buffer ]
     dragon.buffer.return(buffer)()

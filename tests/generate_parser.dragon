@@ -1,0 +1,34 @@
+[ entry point ]
+dragon.main()() = {
+    [ get json ]
+    dragon.copy(dragon.context.input)(json)
+
+    [ compile json ]
+    dragon.json.compile(json, dragon.false, json.workspace)
+
+    [ if compilation failed ]
+    @failure.json_compilation json.workspace:error:occured = {
+        [ setup blank output ]
+        dragon.pack.null()(dragon.context.output !dragon.buffer)
+
+        [ quit ]
+        dragon.jump.bottom(dragon.always, @dragon.master_scope)()
+    }
+
+    [ build parser ]
+    parser.generate(json.workspace)()
+}
+
+[ build parser ]
+parser.generate(json !dragon.json.workspace)() = {
+    [ loop over all parser nodes ]
+    [ get parsling metadata ]
+    dragon.json.traverse.calculate.parsling_list_metadata(json:parslings:root)(content, parsling_byte_size, parsling_count)
+
+    
+}
+
+[ validate that the parser blueprint makes sense ]
+parser.generate.validate.blueprint(json !dragon.json.workspace)(valid !dragon.cell, invalid !dragon.cell) = {
+    [  ]
+}

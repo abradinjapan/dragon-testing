@@ -1,2 +1,2 @@
 all:
-	../dragon-forge.elf ./main.dragon
+	../dragon-forge-debug.elf ./main.dragon
